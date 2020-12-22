@@ -120,14 +120,14 @@ int main()
         else if (input == 'd')
         {
             pos.px++;
-            if(pos.px>24)
+            if(pos.px>49)
                 pos.px=0;
         }
         else if (input == 'a')
         {
             pos.px--;
             if(pos.px<0)
-                pos.px=24;
+                pos.px=49;
         }
 
 
