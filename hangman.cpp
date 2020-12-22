@@ -58,6 +58,17 @@ struct grid
 void hangman();
 position check(position);
 
+struct playerinput
+{
+    char getinput(){
+    cout<<"'d' for going right\n'a' for going left\n'w' for going up\n's' for going down\n'q' for quit\n";
+    cout<<"Type in which direction you want to move: ";
+
+    char input=getch();
+    cin.clear(); // clear error flags
+    return input;
+    }
+};
 int main()
 {
 
@@ -65,56 +76,58 @@ int main()
     mciSendString("play BG.mp3", NULL, 0, NULL);
     //PlaySound(TEXT("welcome.wav"), NULL, SND_SYNC);
 
-    grid jungle {10, 10};   //jungle.width=10;jungle.height=10;
+    grid jungle {50, 25};   //jungle.width=10;jungle.height=10;
     //system("chcp 65001  > nul");
     position pos;
     pos.px = 0;
     pos.py = 0;
     srand(time(NULL));
-    pos.wx1=rand()%10;
-    pos.wy1=rand()%10;
-    pos.wx2=rand()%10;
-    pos.wy2=rand()%10;
-    pos.wx3=rand()%10;
-    pos.wy3=rand()%10;
-    pos.wx4=rand()%10;
-    pos.wy4=rand()%10;
+    pos.wx1=rand()%50;
+    pos.wy1=rand()%25;
+    pos.wx2=rand()%50;
+    pos.wy2=rand()%25;
+    pos.wx3=rand()%50;
+    pos.wy3=rand()%25;
+    pos.wx4=rand()%50;
+    pos.wy4=rand()%25;
+    playerinput p;
 
     char input = '0';
     while (input!='q' && pos.wx1>=0 && pos.wx2>=0 && pos.wx3>=0 && pos.wx4>=0)
     {
         printf("\n");
         jungle.Render(pos);
+        input=p.getinput();
 
-        cout<<"'d' for going right\n'a' for going left\n'w' for going up\n's' for going down\n'q' for quit\n";
-        cout<<"Type in which direction you want to move: ";
-
-        char input=getch();
-        cin.clear(); // clear error flags
+//        cout<<"'d' for going right\n'a' for going left\n'w' for going up\n's' for going down\n'q' for quit\n";
+//        cout<<"Type in which direction you want to move: ";
+//
+//        char input=getch();
+//        cin.clear(); // clear error flags
 
         if (input == 'w')
         {
             pos.py--;
             if(pos.py<0)
-                pos.py=9;
+                pos.py=24;
         }
         else if (input == 's')
         {
             pos.py++;
-            if(pos.py>9)
+            if(pos.py>24)
                 pos.py=0;
         }
         else if (input == 'd')
         {
             pos.px++;
-            if(pos.px>9)
+            if(pos.px>24)
                 pos.px=0;
         }
         else if (input == 'a')
         {
             pos.px--;
             if(pos.px<0)
-                pos.px=9;
+                pos.px=24;
         }
 
 
@@ -122,10 +135,10 @@ int main()
         pos=check(pos);
     }
 
-   /*printf("\n\n\t\tWooHoo!! You won! :)");
-     PlaySound(TEXT("won.wav"), NULL, SND_SYNC);
-     printf("\n\n\t\tOh no!! You lose! :(\n");
-     PlaySound(TEXT("lose.wav"), NULL, SND_SYNC);*/
+    /*printf("\n\n\t\tWooHoo!! You won! :)");
+      PlaySound(TEXT("won.wav"), NULL, SND_SYNC);
+      printf("\n\n\t\tOh no!! You lose! :(\n");
+      PlaySound(TEXT("lose.wav"), NULL, SND_SYNC);*/
     mciSendString("close BG.mp3", NULL, 0, NULL);
     return 0;
 }
